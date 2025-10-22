@@ -9,6 +9,7 @@ import {
   Search,
   ChevronsLeft,
   ChevronsRight,
+  ShieldCheck,
 } from "lucide-react";
 import DashboardContent from "./Content/DashboardContent";
 import SettingsContent from "./Content/SettingsContent";
@@ -16,6 +17,7 @@ import NotificationsContent from "./Content/NotificationsContent";
 import DocumentsContent from "./Content/DocumentsContent";
 import UsersContent from "./Content/UsersContent";
 import AnalyticsContent from "./Content/AnalyticsContent";
+import SignIn from "../Auth/SignIn";
 
 export default function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -28,6 +30,7 @@ export default function Dashboard() {
     { id: "documents", label: "Documents", icon: FileText },
     { id: "notifications", label: "Notifications", icon: Bell },
     { id: "settings", label: "Settings", icon: Settings },
+    { id: "login", label: "Login", icon: ShieldCheck },
   ];
 
   const renderContent = () => {
@@ -44,6 +47,8 @@ export default function Dashboard() {
         return <NotificationsContent />;
       case "settings":
         return <SettingsContent />;
+      case "login":
+        return <SignIn />;
       default:
         return <DashboardContent />;
     }
