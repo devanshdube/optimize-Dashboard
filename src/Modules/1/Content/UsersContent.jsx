@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Edit, Trash2, UserPlus, Search, X } from "lucide-react";
+import InputField from "../../../Components/InputField";
 
 // Generate 50 dummy users
 const generateUsers = () => {
@@ -122,21 +123,31 @@ const UsersContent = () => {
     }
 
     console.log("📊 Filtered users count:", filtered.length);
-    
+
     filteredUsersRef.current = filtered;
     displayedUsersRef.current = filtered.slice(0, CHUNK_SIZE);
-    
+
     setFilteredUsers(filtered);
     setDisplayedUsers(filtered.slice(0, CHUNK_SIZE));
     setHasMore(filtered.length > CHUNK_SIZE);
-    
-    console.log("✅ Initial display:", CHUNK_SIZE, "Has more:", filtered.length > CHUNK_SIZE);
+
+    console.log(
+      "✅ Initial display:",
+      CHUNK_SIZE,
+      "Has more:",
+      filtered.length > CHUNK_SIZE
+    );
   }, [searchTerm, roleFilter, statusFilter, dateFilter, allUsers]);
 
   // Load more data
   const loadMoreUsers = useCallback(() => {
     if (isLoading || !hasMore) {
-      console.log("⛔ Load blocked - isLoading:", isLoading, "hasMore:", hasMore);
+      console.log(
+        "⛔ Load blocked - isLoading:",
+        isLoading,
+        "hasMore:",
+        hasMore
+      );
       return;
     }
 
@@ -164,7 +175,10 @@ const UsersContent = () => {
           return updated;
         });
         setHasMore(endIndex < currentFiltered.length);
-        console.log("🔄 Has more after load:", endIndex < currentFiltered.length);
+        console.log(
+          "🔄 Has more after load:",
+          endIndex < currentFiltered.length
+        );
       } else {
         setHasMore(false);
         console.log("🏁 No more users to load");
@@ -222,7 +236,7 @@ const UsersContent = () => {
   return (
     <>
       <div className="bg-white rounded-lg shadow mb-6">
-        <div className="p-6 border-b">
+        <div className="p-4 border-b">
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-xl font-bold text-gray-800">All Users</h3>
             <button className="flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700">
@@ -235,7 +249,13 @@ const UsersContent = () => {
           <div className="space-y-4">
             {/* Search Box */}
             <div className="relative">
-              <Search
+              <InputField
+                placeholder="Search by name or email..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                icon={Search} // icon pass karenge
+              />
+              {/* <Search
                 className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
                 size={20}
               />
@@ -245,7 +265,7 @@ const UsersContent = () => {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-              />
+              /> */}
             </div>
 
             {/* Filters Row */}
@@ -299,7 +319,7 @@ const UsersContent = () => {
         {/* Table */}
         <div
           className="overflow-x-auto user-scroll-container"
-          style={{ maxHeight: "600px", overflowY: "auto" }}
+          style={{ maxHeight: "450px", overflowY: "auto" }}
         >
           <table className="w-full">
             <thead className="bg-gray-50 sticky top-0 z-10">
